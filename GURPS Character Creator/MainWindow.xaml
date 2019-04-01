@@ -1,0 +1,215 @@
+﻿<Window x:Class="GURPS_Character_Creator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Views="clr-namespace:GURPS_Character_Creator.View"
+        mc:Ignorable="d"
+        Title="GURPS Character Creator" Height="768" Width="1024">
+    <Window.Resources>
+        <Style TargetType="Label" x:Key="StatStyle">
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="DarkRed" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style TargetType="GroupBox" x:Key="GroupBoxStyle">
+            <Setter Property="Width" Value="90"/>
+        </Style>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Foreground" Value="Black"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="190"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="15,0,0,0">
+            <GroupBox x:Name="LabelDescription" >
+                <GroupBox.Header>
+                    <Label Style="{StaticResource StatStyle}" FontSize="16" Margin="0,-5" Content="{Binding DescriptionItem.Name, FallbackValue=Description}" />
+                </GroupBox.Header>
+                <ScrollViewer VerticalScrollBarVisibility="Visible" CanContentScroll="True" Height="150">
+                    <TextBlock Padding="5" FontSize="14" TextAlignment="Justify" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding DescriptionItem.Description}"/>
+                </ScrollViewer>
+            </GroupBox>
+            
+        </StackPanel>
+
+        <StackPanel HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}">HP</Label>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding PlayerStats.ST}" />
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1">
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}">Per</Label>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding PlayerStats.IQ}" />
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="0">
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}">Will</Label>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding PlayerStats.IQ}" />
+                    </GroupBox>
+                </StackPanel>
+            </Grid>            
+        </StackPanel>
+        
+        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,15,0">
+            <StackPanel Height="80" VerticalAlignment="Top" Orientation="Horizontal" >
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}">Max Pts</Label>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <TextBlock Visibility="Collapsed" Text="{Binding PlayerStats.MaxPoint}"/>
+                            <TextBox Visibility="Visible" Text="{Binding PlayerStats.MaxPoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}">Unspent Pts</Label>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding PlayerStats.UnspentPoint}"/>
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}">Max (-) Pts</Label>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <TextBlock Visibility="Collapsed" Text="{Binding PlayerStats.MaxDisadvantagePoint}"/>
+                            <TextBox Visibility="Visible" Text="{Binding PlayerStats.MaxDisadvantagePoint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>                    
+                    </GroupBox>
+                </StackPanel>
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}">(-) Pts Used</Label>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding PlayerStats.UsedDisadvantagePoint}"/>
+                    </GroupBox>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Height="80" VerticalAlignment="Top" Orientation="Horizontal">
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}" FontSize="16" Margin="-4">ST</Label>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <TextBlock Text="{Binding PlayerStats.ST}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="AddST" Width="20" Height="20" FontWeight="Bold" Command="{Binding AddAttributeCommand}" CommandParameter="{Binding ElementName=AddST}">+</Button>
+                        <Button x:Name="SubST" Width="20" Height="20" FontWeight="Bold" Command="{Binding SubAttributeCommand}" CommandParameter="{Binding ElementName=SubST}">-</Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}" FontSize="16" Margin="-4">DX</Label>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding PlayerStats.DX}"/>
+                    </GroupBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="AddDX" Width="20" Height="20" FontWeight="Bold" Command="{Binding AddAttributeCommand}" CommandParameter="{Binding ElementName=AddDX}">+</Button>
+                        <Button x:Name="SubDX" Width="20" Height="20" FontWeight="Bold" Command="{Binding SubAttributeCommand}" CommandParameter="{Binding ElementName=SubDX}">-</Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}" FontSize="16" Margin="-4">IQ</Label>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <TextBlock Text="{Binding PlayerStats.IQ}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="AddIQ" Width="20" Height="20" FontWeight="Bold" Command="{Binding AddAttributeCommand}" CommandParameter="{Binding ElementName=AddIQ}">+</Button>
+                        <Button x:Name="SubIQ" Width="20" Height="20" FontWeight="Bold" Command="{Binding SubAttributeCommand}" CommandParameter="{Binding ElementName=SubIQ}">-</Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel>
+                    <GroupBox Style="{StaticResource GroupBoxStyle}">
+                        <GroupBox.Header>
+                            <Label Style="{StaticResource StatStyle}" FontSize="16" Margin="-4">HT</Label>
+                        </GroupBox.Header>
+                        <TextBlock Text="{Binding PlayerStats.HT}"/>
+                    </GroupBox>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button x:Name="AddHT" Width="20" Height="20" FontWeight="Bold" Command="{Binding AddAttributeCommand}" CommandParameter="{Binding ElementName=AddHT}">+</Button>
+                        <Button x:Name="SubHT" Width="20" Height="20" FontWeight="Bold" Command="{Binding SubAttributeCommand}" CommandParameter="{Binding ElementName=SubHT}">-</Button>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <TabControl x:Name="TabControlBacon" Grid.Row="1" Grid.ColumnSpan="3">
+            <TabItem>
+                <TabItem.Header>
+                    <Label>Skills</Label>
+                </TabItem.Header>
+                <Views:SkillsSettingUserControl x:Name="SkillsView"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Label>Advantages</Label>
+                </TabItem.Header>
+                <Views:AdvantagesSettingUserControl x:Name="AdvantagesView"/>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Label>Disadvantages</Label>
+                </TabItem.Header>
+                <Views:DisadvantagesSettingUserControl x:Name="DisadvantagesView"/>
+            </TabItem>
+        </TabControl>
+        
+    </Grid>
+</Window>
